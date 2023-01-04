@@ -10,9 +10,7 @@ from datetime import datetime, date, time
 import pandas as pd
 
 def load_all_files():
-
     data_dict = mat73.loadmat('V20160929_neurons.mat')
-
     data = []
     
     # iterate over files in
@@ -31,6 +29,7 @@ def load_all_files():
 
             
 def create_CCM_matrix(spikes, region_1,region_2, dim):
+
     tau = 1
     E = dim
     L = 80
@@ -49,19 +48,22 @@ def create_CCM_matrix(spikes, region_1,region_2, dim):
             corr_matrix[i][j]= max(ccm_XY, ccm_YX)
             j+=1
         i+=1
+
     return corr_matrix
 
 def CCM_search(spikes1, spikes2, df):
+
     CCM_df = pd.DataFrame()
-    for i in len(spikes1):
-        for j in len(spikes2):
+    for i in range(2,len(spikes1)):
+        for j in range(2,len(spikes2)):
             df = CCM(dataFrame = df, E = 4, columns = i, target = j, libSizes = "4 198 1", sample = 200, showPlot = False) 
             to_append = df.iloc[:,1:3]
-            CCM_df.append(to_append, axis=1)  
-  
+            pd.concat([CCM_df,to_append],axis=1) 
+
     return CCM_df
 
 def plot_CCM_matrix(matrix, title):
+
     matrix[np.isnan(matrix)] = 0
     fig, ax = plt.subplots()
     c = plt.pcolor(matrix)
