@@ -58,7 +58,7 @@ def CCM_search(spikes1, spikes2, df):
         for j in range(2,len(spikes2)):
             df = CCM(dataFrame = df, E = 4, columns = i, target = j, libSizes = "4 198 1", sample = 200, showPlot = False) 
             to_append = df.iloc[:,1:3]
-            pd.concat([CCM_df,to_append],axis=1) 
+            CCM_df = pd.concat([CCM_df,to_append],axis=1) 
 
     return CCM_df
 
