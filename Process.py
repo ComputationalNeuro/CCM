@@ -9,13 +9,26 @@ from scipy.ndimage import gaussian_filter1d
 from pyEDM import *
 from causal_ccm import *
 from tqdm import tqdm # for showing progress bar in for loops
+from operator import add
 
 #get single trials spike train, index = trial #
 def get_single_trial_data(spikes, index):
+
     trial_spikes = []
     for train in spikes:
         trial_spikes.append(train[index])
+        
     return trial_spikes
+
+def average_single_trial_data(spikes, index1, index2):
+
+    sum = np.empty([585, 201])
+    for i in range(index1, index2):
+        sum += numpy.asarray(get_single_trial_data(spikes, i))
+    tot = index2-index1-1
+    avg = sum/tot
+    
+    return avg
 
 # Function for applying Gaussian Kernel as a Filter with Standard Deviation Sigma 
 def gaussian_filter(spikes, sigma):
