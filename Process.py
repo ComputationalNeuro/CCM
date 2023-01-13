@@ -40,6 +40,7 @@ def gaussian_filter(spikes, sigma):
     return smoothed
  
 def filter_waldo_voltaire(neurons):
+    
     waldo = []
     voltaire = []
     for n in range(0,584):
@@ -48,16 +49,18 @@ def filter_waldo_voltaire(neurons):
         if neurons[n][0] == 'v':
             voltaire.append(n)
 
+    return waldo, voltaire
+
 # Only include time bins 101 through 181
 def filter_time_bins(spikes):
+
     relevant_spikes = []
     for train in spikes:
         spike_train = []
-
         for trial in train:
             spike_train.extend(trial[101:181].tolist())
-
         relevant_spikes.append(spike_train)
+
     return relevant_spikes
 
 # Function for Applying Moving Average Time Series Smoother
