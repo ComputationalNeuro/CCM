@@ -37,10 +37,11 @@ def gaussian_filter(spikes, sigma):
     for train in spikes:
         smoothed[i] = gaussian_filter1d(train, sigma)
         i+=1
+        
     return smoothed
  
 def filter_waldo_voltaire(neurons):
-    
+
     waldo = []
     voltaire = []
     for n in range(0,584):
