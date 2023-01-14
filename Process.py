@@ -81,6 +81,7 @@ def truncate(spikes):
     for train in spikes: 
         truncated[i] = train[4000:6400]
         i+=1
+    return truncated
     
 def get_neuron_groups(neurons):
 
