@@ -74,15 +74,15 @@ def moving_average(spikes, kernel_size):
         i+=1
     return smoothed
 
-#get only spike trains from the last 30 trials after 20 trials of uncertainty
+#Get only spike trains from the last 30 trials after 20 trials of uncertainty
 def truncate(spikes):
     truncated = np.empty([585,2400])
     i = 0 
     for train in spikes: 
         truncated[i] = train[4000:6400]
         i+=1
-    return truncated
-    
+    return truncated 
+
 def get_neuron_groups(neurons):
 
     aNeurons = []
@@ -113,3 +113,17 @@ def get_neuron_groups(neurons):
             hNeurons.append(n)
 
     return aNeurons, bNeurons, cNeurons, dNeurons, eNeurons, fNeurons, gNeurons, hNeurons
+
+#Function to create dataframe for CCM from spike train list 
+def create_spike_dataframe(spikes):
+
+    relevant_df = pd.DataFrame()
+    relevant_df = relevant_df.T
+    relevant = relevant[~np.all(relevant == 0, axis=1)]
+    relevant_df['time'] = range(1, len(relevant_df) + 1)
+    relevant_df.columns = relevant_df.columns.astype(str)
+    cols = list(relevant_df.columns)
+    cols = [cols[-1]] + cols[:-1]
+    relevant_df = relevant_df[cols]
+
+    return relevant_df
