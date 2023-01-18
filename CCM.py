@@ -8,6 +8,7 @@ from scipy.io import loadmat  # this is the SciPy module that loads mat-files
 import matplotlib.pyplot as plt
 from datetime import datetime, date, time
 import pandas as pd
+from copent import transent
 
 def load_all_files():
 
@@ -22,6 +23,15 @@ def load_all_files():
             data.append(loadmat(f))
         except :
             data.append(mat73.loadmat(f))
+
+def create_transent_matrix(spikes):
+
+    transfer_entropy = np.empty([586, 586])
+    for i in range(1,586):
+        for j in range(1,586):
+                transfer_entropy[i][j]= transent(spikes.iloc[:,i], relevant_df.iloc[:,j])
+
+    return transfer_entropy
 
 def create_CCM_matrix(spikes, region_1,region_2, dim):
 
@@ -47,7 +57,7 @@ def create_CCM_matrix(spikes, region_1,region_2, dim):
     return corr_matrix
 
 def CCM_search(spikes1, spikes2, df):
-    #return dataframe of CCM results with E=4
+
     CCM_df = pd.DataFrame()
     for i in range(2,len(spikes1)):
         for j in range(2,len(spikes2)):
@@ -66,7 +76,7 @@ def plot_CCM_matrix(matrix, title):
     plt.title(title)
     plt.show()
 
-def top_neurons (CCM_df):
+def top_neurons(CCM_df):
     # return top neuron indexes based on CCM for input CCM dataframe
     best_rho = CCM_df.max().nlargest(n=50)
     best_rho = pd.DataFrame(best_rho)
