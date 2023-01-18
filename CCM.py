@@ -10,14 +10,10 @@ from datetime import datetime, date, time
 import pandas as pd
 
 def load_all_files():
-    data_dict = mat73.loadmat('V20160929_neurons.mat')
+
     data = []
-    
     # iterate over files in
     # that directory
-
-    mat = loadmat('measured_data.mat')  # load mat-file
-    mdata = mat['measuredData']
 
     files = [f for f in os.listdir('.') if os.path.isfile(f)]
 
@@ -27,7 +23,6 @@ def load_all_files():
         except :
             data.append(mat73.loadmat(f))
 
-            
 def create_CCM_matrix(spikes, region_1,region_2, dim):
 
     tau = 1
@@ -52,7 +47,7 @@ def create_CCM_matrix(spikes, region_1,region_2, dim):
     return corr_matrix
 
 def CCM_search(spikes1, spikes2, df):
-
+    #return dataframe of CCM results with E=4
     CCM_df = pd.DataFrame()
     for i in range(2,len(spikes1)):
         for j in range(2,len(spikes2)):
@@ -70,3 +65,11 @@ def plot_CCM_matrix(matrix, title):
     fig.colorbar(c)
     plt.title(title)
     plt.show()
+
+def top_neurons (CCM_df):
+    # return top neuron indexes based on CCM for input CCM dataframe
+    best_rho = CCM_df.max().nlargest(n=50)
+    best_rho = pd.DataFrame(best_rho)
+    top_50_indices = best_rho.index.drop_duplicates()
+
+    return top_50_indices  
