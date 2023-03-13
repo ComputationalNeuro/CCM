@@ -76,10 +76,10 @@ def plot_CCM_matrix(matrix, title):
     plt.title(title)
     plt.show()
 
-def top_neurons(CCM_df):
-    # return top neuron indexes based on CCM for input CCM dataframe
-    best_rho = CCM_df.max().nlargest(n=50)
+def top_neurons(CCM_df, neurons):
+    # return top N neuron indexes based on CCM for input CCM dataframe
+    best_rho = CCM_df.max().nlargest(n=neurons)
     best_rho = pd.DataFrame(best_rho)
-    top_50_indices = best_rho.index.drop_duplicates()
+    top_indices = best_rho.index.drop_duplicates()
 
-    return top_50_indices  
+    return top_indices  
