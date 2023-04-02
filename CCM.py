@@ -33,6 +33,17 @@ def create_transent_matrix(spikes):
 
     return transfer_entropy
 
+def average_single_trial_data(spikes, index1, index2):
+
+    sum = np.empty([585, 201])
+    for i in range(index1, index2):
+        sum += numpy.asarray(get_single_trial_data(spikes, i))
+    tot = index2-index1-1
+    avg = sum/tot
+    
+    return avg
+
+average = average_single_trial_data(spikes,1,31)
 def create_CCM_matrix(spikes, region_1,region_2, dim):
 
     tau = 1
