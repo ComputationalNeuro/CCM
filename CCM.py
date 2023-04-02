@@ -43,7 +43,6 @@ def average_single_trial_data(spikes, index1, index2):
     
     return avg
 
-average = average_single_trial_data(spikes,1,31)
 def create_CCM_matrix(spikes, region_1,region_2, dim):
 
     tau = 1
