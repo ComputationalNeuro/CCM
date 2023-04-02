@@ -83,6 +83,15 @@ def truncate(spikes):
         i+=1
     return truncated 
 
+def filter_based_on_sparsity(spikes, threshold):
+    trial_spikes = get_single_trial_data(spikes, 0)
+    index = 0
+    for neuron in trial_spikes:
+        if sum(neuron) <= threshold:
+            del trial_spikes[index]
+        index+=1
+    return trial_spikes
+
 def get_neuron_groups(neurons):
 
     aNeurons = []
