@@ -92,4 +92,18 @@ def top_neurons(CCM_df, neurons):
     best_rho = pd.DataFrame(best_rho)
     top_indices = best_rho.index.drop_duplicates()
 
-    return top_indices  
+    return top_indices
+  
+ def plot_FNN(time_series, maxnum):
+    dim = np.arange(1, 10 + 1)
+    f1 = dimension.fnn(x, tau=1, dim=dim, window=0, metric='chebyshev', maxnum = maxnum)[2]
+    f2 = dimension.fnn(x, tau=1, dim=dim, window=0, metric='euclidean', maxnum = maxnum)[2]
+    f3 = dimension.fnn(x, tau=1, dim=dim, window=0, metric='cityblock', maxnum = maxnum)[2]
+
+    plt.title(r'FNN Algorithm Plot')
+    plt.xlabel(r'Embedding dimension $d$')
+    plt.ylabel(r'FNN (%)')
+    plt.plot(dim, 100 * f1, 'bo-', label=r'Chebyshev')
+    plt.plot(dim, 100 * f2, 'g^-', label=r'Euclidean')
+    #plt.plot(dim, 100 * f3, 'rs-', label=r'Cityblock')
+    plt.legend()
